@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  app:
+    image: flaskblog
+    volumes:
+      - ./blog:/app
+    build: ./blog
+    container_name: 'blogzin'
+    ports:
+      - "5000:5000"
