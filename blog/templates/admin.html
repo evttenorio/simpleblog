@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet"> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body style="margin:1%;font-family: 'Slabo 27px', serif">
+<nav>
+<h1>Reflasker blog</h1>
+<a href='./'><i style='font-size:18px;float:right;border-radius: 30px;border:2px dotted gray;margin-right:20px;padding:5px' class="fas fa-book-reader"> Go to Blog</i></a>
+</nav>
+
+
+<div class="container" style="margin:0;padding-top:50px">
+   <div class="row">
+   <div class="col-sm-6" style="background-color:white">
+     <div id='fixed' style="margin-left:50px;position: fixed;">
+      <h3>Add new post</h3>
+
+       <form method="post">
+         <div style='padding-right:100px' class='form-group'>
+           <label for="title">Title:</label>
+           <input type="text" class='form-control col-xs-4' id="fname" name="title" placeholder="Post title" value="{{ request.form['title']  }}"></input><br>
+
+           <label for="post">Post:</label>
+           <textarea class='form-control' id="post" name='content' maxlength="600" rows="4" cols="30" placeholder="Post content - 600 limit">{{ request.form['content']  }}</textarea><br>
+
+           <input type="submit" class='btn btn-dark' value="Submit"></input>
+         </div>
+       </form>
+     </div>
+ </div> 
+
+ <div class="col-sm-6" style="background-color:#f1f1f1;">
+    <h3>Edit Posts</h3>
+      {% for post in posts%}
+      <div style='margin:5%'>
+        <li style='list-style:none'>
+         <button style="border: 1px solid #e4e4e4; font-weight:bolder; font-size:20px" class="btn" data-toggle="collapse" data-target='#col{{ post['id'] }}'> {{ post['title'] }} &nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-chevron-down"></i></button>
+          <div id='col{{ post['id'] }}' class="collapse">
+            <form method='PUT'>
+            <input name='title' value="{{ request.form['title'] or post['title']  }}"></input>
+            <textarea name='content' class="form-control" rows='5'>{{ request.form['content'] or post['content'] }}</textarea>
+            <input action='/{{post['id']}}/edit' style='margin-top:5px;float:right' type='submit' class='btn btn-dark' value='Submit changes'><br><br></form>
+            <form action='{{ url_for('delete', id=post['id']) }}'><input style='margin-top:5px;float:right' type='submit' class='btn btn-danger' value='Delete Post'> </form>
+          </div>
+        </li>
+      {% endfor %}
+      </div>
+ </div>
+
+</body>
+</html>
