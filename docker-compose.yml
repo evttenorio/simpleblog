@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
   app:
-    image: flaskblog
+    enviroment:
+      - FLASK_ENV=development
     volumes:
       - ./blog:/app
     build: ./blog
