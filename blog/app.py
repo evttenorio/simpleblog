@@ -6,7 +6,7 @@ from werkzeug.exceptions import abort
 rnd = random.SystemRandom()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = ''.join(rnd.choice(string.ascii_letters) for i in range(666))
+app.config['SECRET_KEY'] = ''.join(rnd.choice(string.ascii_letters) for i in range(999))
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
